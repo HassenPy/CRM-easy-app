@@ -3,6 +3,8 @@ South==1.0.2
 argparse==1.2.1
 dj-database-url==0.3.0
 dj-static==0.0.6
+django-toolbelt==0.0.1
+gunicorn==19.1.1
 pbr==0.10.7
 psycopg2==2.5.4
 six==1.9.0
