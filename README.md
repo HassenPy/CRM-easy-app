@@ -1,6 +1,6 @@
 ###Welcomen
 
-The tutorial can be found **[here]** (https://ultimatedjango.com/learn-django)
+The tutorial can be found [**here**] (https://ultimatedjango.com/learn-django)
 
 In order for this to work you need to setup two env variables:
 
