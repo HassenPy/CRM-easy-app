@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Signup {% endblock title%}
+
+{% block content %}
+    <div id="content-container" class="container p-none">
+        <div class="side-p">
+            <form id="user-reg-form" action="." method="POST">
+                {% csrf_token %}
+                {# username and password section#}
+                <h3>Signup for a $15 Monthly Subscription</h3>
+                <h5 class="sn-sh">CREATE A USERNAME AND PASSWORD</h5>
+                <table class="table" summary="table modeling the form with username, password and email as input fields.">
+                    <tbody>
+                        <tr>
+                            <th>{{ form.username.label }}</th>
+                            <th>{{ form.email.label }}</th>
+                        </tr>
+                        <tr>
+                            <td>{{ form.username }}</td>
+                            <td>{{ form.email }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form.username.errors }}</td>
+                            <td>{{ form.email.errors }}</td>
+                        </tr>
+                        <tr>
+                            <th>Password</th>
+                            <th>Confirm Password</th>
+                        </tr>
+                        <tr>
+                            <td>{{ form.password1 }}</td>
+                            <td>{{ form.password2 }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form.password1.errors }}</td>
+                            <td>{{ form.password2.errors }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ form.first_name.label }}</th>
+                            <th>{{ form.last_name.label }}</th>
+                        </tr>
+                        <tr>
+                            <th>{{ form.first_name }}</th>
+                            <th>{{ form.last_name }}</th>
+                        </tr>
+                        <tr>
+                            <th>{{ form.first_name.errors }}</th>
+                            <th>{{ form.last_name.errors }}</th>
+                        </tr>
+                        <tr>
+                            <th>{{ form.address_one.label }}</th>
+                            <th>{{ form.address_two.label }}</th>
+                        </tr>
+                        <tr>
+                            <td>{{ form.address_one }}</td>
+                            <td>{{ form.address_two }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form.address_one.errors }}</td>
+                            <td>{{ form.address_two.errors }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ form.state.label }}</th>
+                            <th>{{ form.city.label }}</th>
+                        </tr>
+                        <tr>
+                            <td>{{ form.state }}</td>
+                            <td>{{ form.city }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ form.state.errors }}</td>
+                            <td>{{ form.city.errors }}</td>
+                        </tr>
+                        <tr style="colspan='2'; rowspan='2'">
+                            <td><input type="submit" value="submit"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+            {# Credit Card Section #}
+        </div>
+    </div>
+
+{% endblock content%}
