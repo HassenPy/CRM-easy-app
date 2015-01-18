@@ -18,7 +18,7 @@ def subscriber_view(request, template_name='subscribers/signup_template.html'):
         stripe.api_key = settings.STRIPE_SECRET_KEY
         if form.is_valid():
 
-            #Creating the User record
+            # Creating the User record
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             email = form.cleaned_data['email']
@@ -27,13 +27,13 @@ def subscriber_view(request, template_name='subscribers/signup_template.html'):
             user = User(username=username, email=email,
                         first_name=first_name, last_name=last_name)
             user.set_password(password)
+            user.save()
 
-            #Creating the Subscriber record
+            # Creating the Subscriber record
             address_one = form.cleaned_data['address_one']
             address_two = form.cleaned_data['address_two']
             state = form.cleaned_data['state']
             city = form.cleaned_data['city']
-            user.save()
 
             sub = Subscriber(address_one=address_one, address_two=address_two,
                              state=state, city=city,
@@ -51,6 +51,7 @@ def subscriber_view(request, template_name='subscribers/signup_template.html'):
                               {'form': form,
                                'STRIPE_PUBLISHABLE_KEY': settings.STRIPE_PUBLISHABLE_KEY
                                })
+
             a_u = authenticate(username=username, password=password)
             if a_u is not None:
                 if a_u.is_active:
