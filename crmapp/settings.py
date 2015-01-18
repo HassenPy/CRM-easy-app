@@ -114,7 +114,7 @@ STATICFILES_DIRS = (
 )
 
 
-#Template directory here
+# Template directory here
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
@@ -134,3 +134,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 if ENV_ROLE == 'production':
     import dj_database_url
     DATABASES['default'] = dj_database_url.config()
+
+
+LOGIN_REDIRECT_URL = '/account/list/'
