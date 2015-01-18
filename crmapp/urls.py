@@ -14,8 +14,12 @@ urlpatterns = patterns('',
                        # Subscriber related URLs
                        url(r'^signup/', subscriber_view, name='signup_url'),
                        # Login/Logout URLs
-                       url(r'^login/', 'django.contrib.auth.views.login', {'template_name': 'login.html'})
-                       url(r'^logout/', 'django.contrib.auth.views.logout', {'next_page': '/login/'})
+                       url(r'^login/$', 'django.contrib.auth.views.login',
+                           {'template_name': 'login.html'}
+                           ),
+                       url(r'^logout/$', 'django.contrib.auth.views.logout',
+                           {'next_page': '/login/'}
+                           )
                        # Account related URLs
                        # Contact related URLS
                        # Communication related URLs

@@ -56,6 +56,8 @@
                             <li><a href="/logout/">Logout</a></li>
                             <li><a href=""
                                    class="p-r-none">Accounts</a></li>
+                            <li><a href=""
+                                   class="p-r-none">({{ user.username }})</a></li>
                         {% else %}
                             <li><a href="/login/">Login</a></li>
                             <li><a href="{% url 'signup_url' %}" class="p-r-none">Sign Up</a></li>
