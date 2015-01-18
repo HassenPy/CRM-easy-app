@@ -34,7 +34,7 @@ class Subscriber(models.Model):
             description=email)
 
         #save the stripe id to the customer's profile
-        self.stripe_id = stripe.customer_id
+        self.stripe_id = stripe_customer.id
         self.save()
 
         #charge the customer instead of the car

@@ -15,6 +15,7 @@ def subscriber_view(request, template_name='subscribers/signup_template.html'):
 
     if request.method == 'POST':
         form = SubscriberForm(request.POST)
+        stripe.api_key = settings.STRIPE_SECRET_KEY
         if form.is_valid():
 
             #Creating the User record
@@ -41,7 +42,7 @@ def subscriber_view(request, template_name='subscribers/signup_template.html'):
 
             fee = settings.SUBSCRIPTION_PRICE
             try:
-                stripe_customer = sub.charge(request, email, fee)
+                sub.charge(request, email, fee)
             except stripe.StripeError as e:
                 form._errors[NON_FIELD_ERRORS] = form.error_class([e.args[0]])
 
