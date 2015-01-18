@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+from django.form.forms import NON_FIELD_ERRORS
+from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from .models import Subscriber
 from .forms import SubscriberForm
+
+import stripe
 
 
 def subscriber_view(request, template_name='subscribers/signup_template.html'):
@@ -32,9 +38,31 @@ def subscriber_view(request, template_name='subscribers/signup_template.html'):
                              state=state, city=city,
                              user_rec=user)
             sub.save()
-            print 'saved'
-            return redirect('/success/')
+
+            fee = settings.SUBSCRIPTION_PRICE
+            try:
+                stripe_customer = sub.charge(request, email, fee)
+            except stripe.StripeError as e:
+                form._errors[NON_FIELD_ERRORS] = form.error_class([e.args[0]])
+
+                return render(request, template_name,
+                              {'form': form,
+                               'STRIPE_PUBLISHABLE_KEY': settings.STRIPE_PUBLISHABLE_KEY
+                               })
+            a_u = authenticate(username=username, password=password)
+            if a_u is not None:
+                if a_u.is_active:
+                    login(request, a_u)
+                    return redirect(reverse('account_list'))
+                else:
+                    return redirect(reverse('django.contrib.auth.views.login'))
+            else:
+                return redirect(reverse('signup_url'))
 
     else:
         form = SubscriberForm()
-    return render(request, template_name, {'form': form})
+
+    return render(request, template_name,
+                  {'form': form,
+                   'STRIPE_PUBLISHABLE_KEY': settings.STRIPE_PUBLISHABLE_KEY
+                   })
