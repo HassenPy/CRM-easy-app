@@ -19,7 +19,7 @@ urlpatterns = patterns('',
                            ),
                        url(r'^logout/$', 'django.contrib.auth.views.logout',
                            {'next_page': '/login/'}
-                           )
+                           ),
                        # Account related URLs
                        url(r'^accounts/', AccountList.as_view(), name='account_list'),
                        # Contact related URLS
