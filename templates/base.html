@@ -54,7 +54,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         {% if user.is_authenticated %}
                             <li><a href="/logout/">Logout</a></li>
-                            <li><a href=""
+                            <li><a href="{% url 'account_list' %}"
                                    class="p-r-none">Accounts</a></li>
                             <li><a href=""
                                    class="p-r-none">({{ user.username }})</a></li>
