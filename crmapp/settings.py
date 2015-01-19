@@ -41,7 +41,7 @@ if ENV_ROLE == 'development':
     TEMPLATE_DEBUG = DEBUG
     CRMEASY_DB_PASS = get_env_variable('CRMEASY_DB_PASS')
 
-#Stripe required keys
+# Stripe required keys
 STRIPE_SECRET_KEY = get_env_variable('STRIPE_SECRET_KEY')
 STRIPE_PUBLISHABLE_KEY = get_env_variable('STRIPE_PUBLISHABLE_KEY')
 SUBSCRIPTION_PRICE = 1500
@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'marketing',
     'subscribers',
+    'accounts',
 )
 
 MIDDLEWARE_CLASSES = (
