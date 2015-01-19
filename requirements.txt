@@ -3,11 +3,13 @@ South==1.0.2
 argparse==1.2.1
 dj-database-url==0.3.0
 dj-static==0.0.6
+django-shortuuidfield==0.1.2
 django-toolbelt==0.0.1
 gunicorn==19.1.1
 pbr==0.10.7
 psycopg2==2.5.4
 requests==2.5.1
+shortuuid==0.4.2
 six==1.9.0
 static3==0.5.1
 stevedore==1.2.0
