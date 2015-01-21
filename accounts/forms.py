@@ -3,7 +3,7 @@ from django import forms
 from .models import Account
 
 
-class AccountCreation(forms.Modelform):
+class AccountForm(forms.Modelform):
     class Meta:
         model = Account
         fields = ('name', 'desc', 'address_one',

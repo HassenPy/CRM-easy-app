@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from .models import Account
+from .forms import AccountForm
 
 
 class AccountList(ListView):
@@ -34,11 +35,25 @@ class AccountList(ListView):
 
 @login_required
 def account_detail(request, uuid):
-    print 'got here'
     account = Account.objects.get(uuid=uuid)
     if account.owner != request.user:
         return HttpResponseForbidden()
 
-    template_vars = {'account': account}
+    return render(request, 'accounts/account_details.html', {'account': account})
 
-    return render(request, 'accounts/account_details.html', template_vars)
+
+def acc_creation(request):
+    if request.method == 'POST':
+        form = AccountForm(request.POST)
+        if form.is_valid():
+            to_add = form.save(commit=False)
+            to_add.user = request.user
+            to_add.save()
+
+            redirect reverse('accounts.views.account_detail',
+                             args=(to_add.uuid)
+                             )
+    else:
+        form = AccountForm()
+
+    return render(request, 'accounts/account_creation.html', {'form': form})

@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from marketing.views import HomePage
 from subscribers.views import subscriber_view
-from accounts.views import AccountList, account_detail
+from accounts.views import AccountList
 from accounts.urls import account_urls
 
 
