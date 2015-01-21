@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
-# , redirect
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.urlresolvers import reverse
 
 from .models import Account
 from .forms import AccountForm
+
+import time
 
 
 class AccountList(ListView):
@@ -38,22 +40,22 @@ def account_detail(request, uuid):
     account = Account.objects.get(uuid=uuid)
     if account.owner != request.user:
         return HttpResponseForbidden()
-
     return render(request, 'accounts/account_details.html', {'account': account})
 
 
+@login_required
 def acc_creation(request):
     if request.method == 'POST':
         form = AccountForm(request.POST)
         if form.is_valid():
             to_add = form.save(commit=False)
-            to_add.user = request.user
+            to_add.owner = request.user
             to_add.save()
+            time.sleep(0.05)
+            redirect_url = reverse('account_detail',
+                                   args=(to_add.uuid,))
+            return redirect(redirect_url)
 
-            redirect reverse('accounts.views.account_detail',
-                             args=(to_add.uuid)
-                             )
     else:
         form = AccountForm()
-
     return render(request, 'accounts/account_creation.html', {'form': form})

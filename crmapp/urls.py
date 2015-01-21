@@ -3,8 +3,7 @@ from django.contrib import admin
 
 from marketing.views import HomePage
 from subscribers.views import subscriber_view
-from accounts.views import AccountList
-from accounts.urls import account_urls
+from accounts.views import AccountList, account_detail
 
 
 urlpatterns = patterns('',
@@ -23,9 +22,12 @@ urlpatterns = patterns('',
                            {'next_page': '/login/'}
                            ),
                        # Account related URLs
-                       url(r'^account/new/$', 'accounts.views.acc_creation', name='account_new'),
-                       url(r'^account/$', AccountList.as_view(), name='account_list'),
+                       url(r'^account/new/$', 'accounts.views.acc_creation',
+                           name='account_new'),
+                       url(r'^account/$', AccountList.as_view(),
+                           name='account_list'),
+                       url(r'^account/(?P<uuid>[\w-]+)/$', account_detail,
+                           name='account_detail'),
                        # Contact related URLS
-                       url(r'^account/(?P<uuid>[\w-]+)/', include(account_urls)),
                        # Communication related URLs
                        )
