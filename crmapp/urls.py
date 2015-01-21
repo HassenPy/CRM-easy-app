@@ -23,6 +23,7 @@ urlpatterns = patterns('',
                            {'next_page': '/login/'}
                            ),
                        # Account related URLs
+                       url(r'^account/new/$', 'accounts.views.acc_creation', name='account_new'),
                        url(r'^account/$', AccountList.as_view(), name='account_list'),
                        # Contact related URLS
                        url(r'^account/(?P<uuid>[\w-]+)/', include(account_urls)),
