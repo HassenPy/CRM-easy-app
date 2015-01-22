@@ -37,6 +37,7 @@ class AccountList(ListView):
 
 @login_required
 def account_detail(request, uuid):
+    print 'why here !'
     account = Account.objects.get(uuid=uuid)
     if account.owner != request.user:
         return HttpResponseForbidden()
@@ -52,6 +53,7 @@ def acc_creation(request):
             to_add.owner = request.user
             to_add.save()
             time.sleep(0.05)
+            print 'already here'
             redirect_url = reverse('account_detail',
                                    args=(to_add.uuid,))
             return redirect(redirect_url)
