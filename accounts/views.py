@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseForbidden
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
@@ -41,13 +41,20 @@ def account_detail(request, uuid):
     account = Account.objects.get(uuid=uuid)
     if account.owner != request.user:
         return HttpResponseForbidden()
-    return render(request, 'accounts/account_details.html', {'account': account})
+    template_vars = {'account': account}
+    return render(request, 'accounts/account_details.html', template_vars)
 
 
 @login_required
-def acc_creation(request):
+def acc_creation(request, uuid=None):
+    if uuid:
+        account = get_object_or_404(Account, uuid=uuid)
+        if account.owner != request.user:
+            return HttpResponseForbidden
+    else:
+        account = Account(owner=request.user)
     if request.method == 'POST':
-        form = AccountForm(request.POST)
+        form = AccountForm(request.POST, instance=account)
         if form.is_valid():
             to_add = form.save(commit=False)
             to_add.owner = request.user
@@ -59,5 +66,7 @@ def acc_creation(request):
             return redirect(redirect_url)
 
     else:
-        form = AccountForm()
-    return render(request, 'accounts/account_creation.html', {'form': form})
+        form = AccountForm(instance=account)
+
+    template_vars = {'form': form, 'account': account}
+    return render(request, 'accounts/account_creation.html', template_vars)
