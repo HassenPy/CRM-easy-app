@@ -67,5 +67,10 @@ def acc_creation(request, uuid=None):
     else:
         form = AccountForm(instance=account)
 
+    if request.is_ajax():
+        template_name = 'accounts/account_item_form.html'
+    else:
+        template_name = 'accounts/account_creation.html'
+
     template_vars = {'form': form, 'account': account}
-    return render(request, 'accounts/account_creation.html', template_vars)
+    return render(request, template_name, template_vars)
