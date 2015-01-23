@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 
 from .models import Account
 from .forms import AccountForm
+from contacts.models import Contact
 
 import time
 
@@ -40,7 +41,12 @@ def account_detail(request, uuid):
     account = Account.objects.get(uuid=uuid)
     if account.owner != request.user:
         return HttpResponseForbidden()
-    template_vars = {'account': account}
+    contacts = Contact.objects.filter(account=account)
+
+    template_vars = {'account': account
+                     'contact': contact
+                     }
+
     return render(request, 'accounts/account_details.html', template_vars)
 
 
