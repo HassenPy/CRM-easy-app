@@ -9,4 +9,4 @@ In order for this to work you need to make a [**stripe account**] (https://strip
 ######SECRET_KEY:
      your django app secret key
 ######STRIPE_SECRET_KEY && STRIPE_PUBLISHABLE_KEY:
-     you get those from [**here**] (https://dashboard.stripe.com/account/apikeys)
+     you get those from your stripe account under account/apikeys.
