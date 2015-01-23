@@ -41,10 +41,10 @@ def account_detail(request, uuid):
     account = Account.objects.get(uuid=uuid)
     if account.owner != request.user:
         return HttpResponseForbidden()
-    contacts = Contact.objects.filter(account=account)
-
-    template_vars = {'account': account
-                     'contact': contact
+    contacts = Contact.objects.filter(owner=account.owner)
+    print contacts
+    template_vars = {'account': account,
+                     'contacts': contacts
                      }
 
     return render(request, 'accounts/account_details.html', template_vars)
