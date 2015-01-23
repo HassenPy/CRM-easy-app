@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, url
+from .views import cont_creation, contact_detail
+
 
 contact_urls = patterns('',
-                        url('^new/$', 'contacts.views.cont_creation',
-                            name='contact_new'),
-                        url('^$', 'contacts.views.contact_detail',
-                            name="contact_detail")
+                        url(r'^$', contact_detail,
+                            name='contact_detail'),
                         )

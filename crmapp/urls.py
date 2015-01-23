@@ -5,6 +5,7 @@ from marketing.views import HomePage
 from subscribers.views import subscriber_view
 from accounts.urls import account_urls
 from contacts.urls import contact_urls
+from contacts.views import cont_creation
 
 
 urlpatterns = patterns('',
@@ -25,6 +26,9 @@ urlpatterns = patterns('',
                        # Account related URLs
                        url(r'^account/', include(account_urls)),
                        # Contact related URLS
+                       url(r'^contact/new/$', cont_creation,
+                           name='contact_new'
+                           ),
                        url(r'^contact/(?P<uuid>[\w-]+)/', include(contact_urls)),
                        # Communication related URLs
                        )

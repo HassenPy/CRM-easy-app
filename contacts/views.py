@@ -1,10 +1,12 @@
-from django.shortcuts import render, HttpResponseForbidden
+from django.shortcuts import render
+from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
-from django.code.urlresolvers import reverse
+from django.core.urlresolvers import reverse
 
 from .models import Contact
-from accounts.models import Account
 from .form import ContactForm
+from accounts.models import Account
+from accounts.forms import AccountForm
 
 
 @login_required
@@ -31,6 +33,7 @@ def cont_creation(request):
             contact.save()
 
             reverse_url = reverse('account_detail', args=(account.uuid,))
+            print 'hi'
             return redirect(reverse_url)
     else:
         form = AccountForm()
