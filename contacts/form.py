@@ -25,7 +25,7 @@ class ContactForm(forms.ModelForm):
             'role': forms.TextInput(
                 attrs={
                     'placeholder': 'Role',
-                    'class': 'gi-form-addr form-control'
+                    'class': 'form-control'
                 }
             ),
             'phone': forms.TextInput(
@@ -40,4 +40,4 @@ class ContactForm(forms.ModelForm):
                     'class': 'form-control'
                 }
             )
-            }
+        }

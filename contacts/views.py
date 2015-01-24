@@ -1,12 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
 from .models import Contact
 from .form import ContactForm
-from accounts.models import Account
-from accounts.forms import AccountForm
 
 
 @login_required
@@ -36,7 +34,7 @@ def cont_creation(request):
             print 'hi'
             return redirect(reverse_url)
     else:
-        form = AccountForm()
+        form = ContactForm()
 
     template_vars = {'form': form}
     template = 'contacts/contact_creation.html'
