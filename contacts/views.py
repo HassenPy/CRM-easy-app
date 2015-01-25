@@ -39,10 +39,20 @@ def cont_creation(request, uuid=None, account=None):
             contact.owner = request.user
             contact.save()
 
-            reverse_url = reverse('account_detail', args=(account.uuid,))
-            return redirect(reverse_url)
+            # in case the request is ajax, we return the simple
+            # form template instead of the whole page
+            if request.is_ajax():
+                return render(request,
+                              'contacts/contact_item_view.html',
+                              {'account': account, 'contact': contact}
+                              )
+            else:
+                reverse_url = reverse('account_detail', args=(account.uuid,))
+                return redirect(reverse_url)
+
         else:
             account = form.cleaned_data['account']
+
     else:
         form = ContactForm(instance=Contact)
 
@@ -53,6 +63,9 @@ def cont_creation(request, uuid=None, account=None):
                      'contact': contact,
                      'account': account
                      }
+    if request.is_ajax():
+        template = 'contact/contact_item_form.html'
+    else:
+        template = 'contacts/contact_creation.html'
 
-    template = 'contacts/contact_creation.html'
     return render(request, template, template_vars)
