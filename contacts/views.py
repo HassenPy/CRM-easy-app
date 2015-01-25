@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
 from .models import Contact
 from .form import ContactForm
+from accounts.models import Account
 
 
 @login_required
@@ -17,9 +18,17 @@ def contact_detail(request, uuid):
 
 
 @login_required
-def cont_creation(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
+def cont_creation(request, uuid=None, account=None):
+
+    if uuid:
+        contact = get_object_or_404(Contact, uuid=uuid)
+        if contact.owner != request.user:
+            return HttpResponseForbidden
+    else:
+        contact = Contact(owner=request.user)
+
+    if request.POST:
+        form = ContactForm(request.POST, instance=contact)
         if form.is_valid():
             account = form.cleaned_data['account']
 
@@ -31,11 +40,19 @@ def cont_creation(request):
             contact.save()
 
             reverse_url = reverse('account_detail', args=(account.uuid,))
-            print 'hi'
             return redirect(reverse_url)
+        else:
+            account = form.cleaned_data['account']
     else:
-        form = ContactForm()
+        form = ContactForm(instance=Contact)
 
-    template_vars = {'form': form}
+    if request.GET.get('account', ''):
+        account = Account.objects.get(id=request.GET.get('account', ''))
+
+    template_vars = {'form': form,
+                     'contact': contact,
+                     'account': account
+                     }
+
     template = 'contacts/contact_creation.html'
     return render(request, template, template_vars)
