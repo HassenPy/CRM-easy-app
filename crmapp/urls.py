@@ -5,8 +5,7 @@ from marketing.views import HomePage
 from subscribers.views import subscriber_view
 from accounts.urls import account_urls
 from contacts.urls import contact_urls
-from contacts.views import cont_creation
-
+from contacts.views import cont_creation, ContactDelete
 
 urlpatterns = patterns('',
 
@@ -29,6 +28,13 @@ urlpatterns = patterns('',
                        url(r'^contact/new/$', cont_creation,
                            name='contact_new'
                            ),
-                       url(r'^contact/(?P<uuid>[\w-]+)/', include(contact_urls)),
+                       url(r'^contact/(?P<uuid>[\w-]+)/',
+                           include(contact_urls)
+                           ),
+
+                       url(r'^contact/(?P<pk>[\w-]+)/delete/$',
+                           ContactDelete.as_view(),
+                           name='contact_delete'
+                           ),
                        # Communication related URLs
                        )

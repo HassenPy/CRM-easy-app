@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, Http404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import DeleteView
 
 from .models import Contact
 from .form import ContactForm
@@ -19,7 +21,7 @@ def contact_detail(request, uuid):
 
 @login_required
 def cont_creation(request, uuid=None, account=None):
-
+    print 'hi'
     if uuid:
         contact = get_object_or_404(Contact, uuid=uuid)
         if contact.owner != request.user:
@@ -54,7 +56,7 @@ def cont_creation(request, uuid=None, account=None):
             account = form.cleaned_data['account']
 
     else:
-        form = ContactForm(instance=Contact)
+        form = ContactForm(instance=contact)
 
     if request.GET.get('account', ''):
         account = Account.objects.get(id=request.GET.get('account', ''))
@@ -64,8 +66,38 @@ def cont_creation(request, uuid=None, account=None):
                      'account': account
                      }
     if request.is_ajax():
-        template = 'contact/contact_item_form.html'
+        template = 'contacts/contact_item_form.html'
     else:
         template = 'contacts/contact_creation.html'
 
     return render(request, template, template_vars)
+
+
+class ContactMixin(object):
+    model = Contact
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({'object_name': 'Contact'})
+        return kwargs
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(ContactMixin, self).dispatch(*args, **kwargs)
+
+
+class ContactDelete(ContactMixin, DeleteView):
+    template_name = 'contacts/object_confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        obj = super(ContactDelete, self).get_object()
+        if not obj.owner == self.request.user:
+            raise Http404
+        account = Account.objects.get(id=obj.account.id)
+        self.account = account
+        return obj
+
+    def get_success_url(self):
+        return reverse(
+            'account_detail',
+            args=(self.account.uuid,)
+        )

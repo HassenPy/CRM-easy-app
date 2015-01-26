@@ -53,7 +53,6 @@ function resetForm($form) {
 
 // Main App
 $(document).ready(function() {
-    ...
 
     // Contact - Use AJAX to get the Contact Add form
     $('#cd-container').delegate('#new-contact', 'click', function(e) {
