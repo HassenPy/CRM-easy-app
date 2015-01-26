@@ -138,4 +138,5 @@ if ENV_ROLE == 'production':
     DATABASES['default'] = dj_database_url.config()
 
 
-LOGIN_REDIRECT_URL = '/account/list/'
+LOGIN_REDIRECT_URL = '/account/'
+LOGIN_URL = '/login/'

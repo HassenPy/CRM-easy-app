@@ -15,7 +15,7 @@ def contact_detail(request, uuid):
     contact = Contact.objects.get(uuid=uuid)
     return render(request,
                   'contacts/contact_detail.html',
-                  {'contacts': contact}
+                  {'contact': contact}
                   )
 
 
