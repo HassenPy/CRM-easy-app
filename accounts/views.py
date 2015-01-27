@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from .models import Account
 from .forms import AccountForm
 from contacts.models import Contact
-
+from communications.models import Communication
 import time
 
 
@@ -41,10 +41,14 @@ def account_detail(request, uuid):
     account = Account.objects.get(uuid=uuid)
     if account.owner != request.user:
         return HttpResponseForbidden()
+
     contacts = Contact.objects.filter(owner=account.owner)
-    print contacts
+    comms = Communication.objects.filter(
+        account=account).order_by('-created_on')
+
     template_vars = {'account': account,
-                     'contacts': contacts
+                     'contacts': contacts,
+                     'communications': comms
                      }
 
     return render(request, 'accounts/account_details.html', template_vars)

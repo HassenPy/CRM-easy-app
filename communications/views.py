@@ -7,7 +7,7 @@ from .models import Communication
 
 
 @login_required
-def comm_detail(request, uuid):
+def comm_details(request, uuid):
 
     comm = Communication.objects.get(uuid=uuid)
     if comm.owner != request.user:
