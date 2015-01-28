@@ -42,6 +42,6 @@ def comm_cru(request):
         'form': form,
     }
 
-    template_name = 'communications/comm_cru.html'
+    template_name = 'communications/comm_creation.html'
 
     return render(request, template_name, template_vars)
