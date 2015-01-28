@@ -9,6 +9,7 @@ from .models import Account
 from .forms import AccountForm
 from contacts.models import Contact
 from communications.models import Communication
+from communications.forms import CommunicationForm
 import time
 
 
@@ -46,9 +47,11 @@ def account_detail(request, uuid):
     comms = Communication.objects.filter(
         account=account).order_by('-created_on')
 
+    form = CommunicationForm()
     template_vars = {'account': account,
                      'contacts': contacts,
-                     'communications': comms
+                     'communications': comms,
+                     'form': form
                      }
 
     return render(request, 'accounts/account_details.html', template_vars)

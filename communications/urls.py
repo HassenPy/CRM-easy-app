@@ -4,6 +4,6 @@ from .views import comm_details
 
 com_urls = patterns('',
                     url(r'^$', comm_details,
-                        name='com_detail'
+                        name='comm_detail'
                         ),
                     )
