@@ -6,7 +6,7 @@ com_urls = patterns('',
                     url(r'^$', comm_details,
                         name='comm_detail'
                         ),
-                    url(r'^edit/$', comm_creation,
+                    url(r'^/edit$', comm_creation,
                         name='comm_update'
                         ),
                     )

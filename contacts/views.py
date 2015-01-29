@@ -86,7 +86,7 @@ class ContactMixin(object):
 
 
 class ContactDelete(ContactMixin, DeleteView):
-    template_name = 'contacts/object_confirm_delete.html'
+    template_name = 'object_confirm_delete.html'
 
     def get_object(self, queryset=None):
         obj = super(ContactDelete, self).get_object()
