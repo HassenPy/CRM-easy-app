@@ -1,10 +1,10 @@
 <form id="comm-form"
       {# POST Destination #}
-      action=""
+      action="{% url 'comm_new' %}"
       method="post">
     {% csrf_token %}
     <p>{{ form.subject }}</p>
-    <div id="comm-form-internals">
+    <div id="comm-form">
         <p>{{ form.subject.errors }}</p>
         <p>{{ form.notes }}</p>
         <p>{{ form.notes.errors }}</p>

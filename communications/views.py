@@ -19,10 +19,11 @@ def comm_details(request, uuid):
 
 
 @login_required()
-def comm_cru(request):
+def comm_creation(request):
 
     if request.POST:
         form = CommunicationForm(request.POST)
+        print form.errors
         if form.is_valid():
             # make sure the user owns the account
             account = form.cleaned_data['account']
@@ -34,8 +35,10 @@ def comm_cru(request):
             comm.save()
             # return the user to the account detail view
             reverse_url = reverse('account_detail', args=(account.uuid,))
+            print 'redirecting'
             return redirect(reverse_url)
     else:
+        print 'not valid form'
         form = CommunicationForm()
 
     template_vars = {
