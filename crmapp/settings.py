@@ -33,7 +33,7 @@ ENV_ROLE = get_env_variable('ENV_ROLE')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_env_variable('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = TRUE
 TEMPLATE_DEBUG = DEBUG
 CRMEASY_DB_PASS = False
 if ENV_ROLE == 'development':
