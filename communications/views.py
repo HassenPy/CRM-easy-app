@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden, Http404
+from django.utils.decorators import method_decorator
+from django.views.generic.edit import DeleteView
 from django.core.urlresolvers import reverse
 # from django.core.urlresolvers import reverse
 
-from .models import Communication
 from .forms import CommunicationForm
 from accounts.models import Account
+from .models import Communication
 
 
 @login_required
@@ -15,7 +17,6 @@ def comm_details(request, uuid):
     comm = Communication.objects.get(uuid=uuid)
     if comm.owner != request.user:
             return HttpResponseForbidden()
-
     return render(request, 'communications/comm_detail.html', {'comm': comm})
 
 
@@ -73,3 +74,33 @@ def comm_creation(request, uuid=None, account=None):
         template_name = 'communications/comm_creation.html'
 
     return render(request, template_name, template_vars)
+
+
+class CommMixin(object):
+    model = Communication
+
+    def get_context_data(self, **kwargs):
+        kwargs.update({'object_name': 'Communication'})
+        return kwargs
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(CommMixin, self).dispatch(*args, **kwargs)
+
+
+class CommDelete(CommMixin, DeleteView):
+    template_name = 'object_confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        obj = super(CommDelete, self).get_object()
+        if not obj.owner == self.request.user:
+            raise Http404
+        account = Account.objects.get(id=obj.account.id)
+        self.account = account
+        return obj
+
+    def get_success_url(self):
+        return reverse(
+            'account_detail',
+            args=(self.account.uuid,)
+        )

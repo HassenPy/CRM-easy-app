@@ -2,13 +2,18 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
 
+
 from marketing.views import HomePage
+
 from subscribers.views import subscriber_view
+
 from accounts.urls import account_urls
+
 from contacts.urls import contact_urls
 from contacts.views import cont_creation, ContactDelete
+
 from communications.urls import com_urls
-from communications.views import comm_creation
+from communications.views import comm_creation, CommDelete
 
 urlpatterns = patterns('',
 
@@ -61,6 +66,9 @@ urlpatterns = patterns('',
                        url(r'^comm/new/$',
                            comm_creation,
                            name='comm_new'
+                           ),
+                       url(r'^comm/(?P<pk>[\w-]+)/delete/$',
+                           CommDelete.as_view(), name='comm_delete'
                            ),
                        url(r'^comm/(?P<uuid>[\w-]+)',
                            include(com_urls)

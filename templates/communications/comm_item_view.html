@@ -3,7 +3,7 @@
         <span>
             {# Comm Delete URL #}
             <a class="cancel comm-control" 
-               href=""></a>
+               href="{% url 'comm_delete %}?account={{ account.id }}"></a>
             {# Comm Edit URL #}
             <a class="pen comm-control comm-edit" 
                href="{% url 'comm_update' %}?account={{ account.id }}"></a>
