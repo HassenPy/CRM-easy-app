@@ -1,6 +1,10 @@
 <form id="comm-form"
       {# POST Destination #}
-      action="{% url 'comm_new' %}"
+      action="{% if comm.uuid %}
+              {% url 'comm_update' comm.uuid %}
+              {% else %}
+              {% url 'comm_new' %}
+              {% endif %}"
       method="post">
     {% csrf_token %}
     <p>{{ form.subject }}</p>
