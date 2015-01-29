@@ -42,9 +42,16 @@ def comm_creation(request, uuid=None, account=None):
             comm = form.save(commit=False)
             comm.owner = request.user
             comm.save()
+            if request.is_ajax():
+                return render(request,
+                              'communications/comm_item_view.html',
+                              {'comm': comm, 'account': account}
+                              )
+
             # return the user to the account detail view
-            reverse_url = reverse('account_detail', args=(account.uuid,))
-            return redirect(reverse_url)
+            else:
+                reverse_url = reverse('account_detail', args=(account.uuid,))
+                return redirect(reverse_url)
         else:
             account = form.cleaned_data['account']
 
@@ -60,7 +67,9 @@ def comm_creation(request, uuid=None, account=None):
         'comm': comm,
         'account': account
     }
-
-    template_name = 'communications/comm_creation.html'
+    if request.is_ajax():
+        template_name = 'communications/comm_item_form.html'
+    else:
+        template_name = 'communications/comm_creation.html'
 
     return render(request, template_name, template_vars)
