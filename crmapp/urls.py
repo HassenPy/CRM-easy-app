@@ -2,7 +2,8 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.views import logout
 
-from marketing.views import custom_login
+from custom_login.views import custom_login
+
 from marketing.views import home_page
 
 from subscribers.views import subscriber_view
