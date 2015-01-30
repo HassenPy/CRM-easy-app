@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.contrib.auth.views import login, logout
+from django.contrib.auth.views import logout
 
-
-from marketing.views import HomePage
+from marketing.views import custom_login
+from marketing.views import home_page
 
 from subscribers.views import subscriber_view
 
@@ -15,6 +15,7 @@ from contacts.views import cont_creation, ContactDelete
 from communications.urls import com_urls
 from communications.views import comm_creation, CommDelete
 
+
 urlpatterns = patterns('',
 
                        # Admin URL
@@ -24,7 +25,7 @@ urlpatterns = patterns('',
 
                        # Marketing pages
                        url(r'^$',
-                           HomePage.as_view(),
+                           home_page,
                            name="home"
                            ),
 
@@ -36,8 +37,9 @@ urlpatterns = patterns('',
 
                        # Login/Logout URLs
                        url(r'^login/$',
-                           login,
-                           {'template_name': 'login.html'}
+                           custom_login,
+                           {'template_name': 'login.html'},
+                           name="custom_login",
                            ),
                        url(r'^logout/$',
                            logout,

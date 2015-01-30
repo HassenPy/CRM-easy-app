@@ -53,8 +53,6 @@ function resetForm($form) {
 
 // Main App
 $(document).ready(function() {
-    ...
-
     // Communications - When the Subject of the form is clicked, the whole form is displayed
     $('#co-container').delegate('#id_subject', 'focus', function() {
         $('#comm-form-internals').show();
