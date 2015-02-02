@@ -1,11 +1,15 @@
 Django==1.7.1
 South==1.0.2
 argparse==1.2.1
+csscompressor==0.9.3
 dj-database-url==0.3.0
 dj-static==0.0.6
+django-pipeline==1.4.3
 django-shortuuidfield==0.1.2
 django-toolbelt==0.0.1
+futures==2.2.0
 gunicorn==19.1.1
+jsmin==2.1.0
 pbr==0.10.7
 psycopg2==2.5.4
 requests==2.5.1
