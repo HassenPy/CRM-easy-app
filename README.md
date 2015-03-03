@@ -1,4 +1,4 @@
-###Welcomen
+###Welcome
 
 The tutorial can be found [**here**] (https://ultimatedjango.com/learn-django)
 
@@ -11,4 +11,4 @@ In order for this to work you need to make a [**stripe account**] (https://strip
 ######STRIPE_SECRET_KEY && STRIPE_PUBLISHABLE_KEY:
      you get those from your stripe account under account/apikeys.
 
-**Didn't add comments to this project for memory training, as this project has no long term value**
+**Didn't add comments to this project as it has no long term value, i also added some feature not covered in the tutorial.**
