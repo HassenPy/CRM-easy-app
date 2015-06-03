@@ -1,5 +1,5 @@
 ###Welcome
-DEMO: crmeasypy.herokuapp.com
+DEMO: [crmeasypy.herokuapp.com](crmeasypy.herokuapp.com)
 
 The tutorial can be found [**here**] (https://ultimatedjango.com/learn-django)
 
